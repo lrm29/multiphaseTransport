@@ -38,46 +38,46 @@ Foam::multiphase::transport::transport
     const fvMesh& mesh
 )
 :
-	mesh_(mesh),
-	multiphaseTransportDictionary_(multiphaseTransportDictionary),
-	continuousPhaseSubDict_(multiphaseTransportDictionary.subDict("continuousPhase")),
-	dispersedPhaseSubDict_(multiphaseTransportDictionary.subDict("dispersedPhase")),
-	transportCoeffsSubDict_(multiphaseTransportDictionary.subDict("transportCoefficients")),
-	dispersedPhases_(readLabel(multiphaseTransportDictionary_.lookup("dispersedPhases"))),
-	Cl_(transportCoeffsSubDict_.lookup("Cl")),
-	Cvm_(transportCoeffsSubDict_.lookup("Cvm")),
-	rhoc_(continuousPhaseSubDict_.lookup("rho")),
-	muc_(continuousPhaseSubDict_.lookup("mu")),
-	nuc_(muc_/rhoc_),
+    mesh_(mesh),
+    multiphaseTransportDictionary_(multiphaseTransportDictionary),
+    continuousPhaseSubDict_(multiphaseTransportDictionary.subDict("continuousPhase")),
+    dispersedPhaseSubDict_(multiphaseTransportDictionary.subDict("dispersedPhase")),
+    transportCoeffsSubDict_(multiphaseTransportDictionary.subDict("transportCoefficients")),
+    dispersedPhases_(readLabel(multiphaseTransportDictionary_.lookup("dispersedPhases"))),
+    Cl_(transportCoeffsSubDict_.lookup("Cl")),
+    Cvm_(transportCoeffsSubDict_.lookup("Cvm")),
+    rhoc_(continuousPhaseSubDict_.lookup("rho")),
+    muc_(continuousPhaseSubDict_.lookup("mu")),
+    nuc_(muc_/rhoc_),
     rhocField_(
-    		IOobject
-    		(
-    				"rhoc",
-    				mesh_.time().timeName(),
-    				mesh_
-    		 ),
-    		 mesh_,
-    		 dimensionedScalar(continuousPhaseSubDict_.lookup("rho"))
-    	  ),
-	mucField_(
-			IOobject
-			(
-					"muc",
-					mesh_.time().timeName(),
-					mesh_
-			 ),
-			 mesh_,
-			 dimensionedScalar(continuousPhaseSubDict_.lookup("mu"))
-		  ),
-	nucField_(
-			IOobject
-			(
-					"nuc",
-					mesh_.time().timeName(),
-					mesh_
-			 ),
-			 mucField_/rhocField_
-		  )
+            IOobject
+            (
+                    "rhoc",
+                    mesh_.time().timeName(),
+                    mesh_
+             ),
+             mesh_,
+             dimensionedScalar(continuousPhaseSubDict_.lookup("rho"))
+          ),
+    mucField_(
+            IOobject
+            (
+                    "muc",
+                    mesh_.time().timeName(),
+                    mesh_
+             ),
+             mesh_,
+             dimensionedScalar(continuousPhaseSubDict_.lookup("mu"))
+          ),
+    nucField_(
+            IOobject
+            (
+                    "nuc",
+                    mesh_.time().timeName(),
+                    mesh_
+             ),
+             mucField_/rhocField_
+          )
 {
 
     rhod_.setSize(dispersedPhases_);
@@ -88,50 +88,50 @@ Foam::multiphase::transport::transport
     mudField_.setSize(dispersedPhases_);
     nudField_.setSize(dispersedPhases_);
 
-	for (int i=0;i<dispersedPhases_;++i){
+    for (int i=0;i<dispersedPhases_;++i){
         rhod_.set(i, new dimensionedScalar(dispersedPhaseSubDict_.lookup("rho"+Foam::name(i+1))));
         mud_.set(i, new dimensionedScalar(dispersedPhaseSubDict_.lookup("mu"+Foam::name(i+1))));
         nud_.set(i, new dimensionedScalar(mud_[i]/rhod_[i]));
         sigmad_.set(i, new dimensionedScalar(dispersedPhaseSubDict_.lookup("sigma"+Foam::name(i+1))));
         rhodField_.set(i, new volScalarField(
-				IOobject
-				(
-					"rhodField"+ Foam::name(i+1),
-					mesh_.time().timeName(),
-					mesh_,
-					IOobject::NO_READ,
-					IOobject::NO_WRITE
-				 ),
-				 mesh,
+                IOobject
+                (
+                    "rhodField"+ Foam::name(i+1),
+                    mesh_.time().timeName(),
+                    mesh_,
+                    IOobject::NO_READ,
+                    IOobject::NO_WRITE
+                 ),
+                 mesh,
                  dimensionedScalar(dispersedPhaseSubDict_.lookup("rho"+Foam::name(i+1)))
-			 )
+             )
         );
         mudField_.set(i, new volScalarField(
-				IOobject
-				(
-					"mudField"+ Foam::name(i+1),
-					mesh_.time().timeName(),
-					mesh_,
-					IOobject::NO_READ,
-					IOobject::NO_WRITE
-				 ),
-				 mesh,
+                IOobject
+                (
+                    "mudField"+ Foam::name(i+1),
+                    mesh_.time().timeName(),
+                    mesh_,
+                    IOobject::NO_READ,
+                    IOobject::NO_WRITE
+                 ),
+                 mesh,
                  dimensionedScalar(dispersedPhaseSubDict_.lookup("mu"+Foam::name(i+1)))
-			 )
+             )
         );
         nudField_.set(i, new volScalarField(
-				IOobject
-				(
-					"nudField"+ Foam::name(i+1),
-					mesh_.time().timeName(),
-					mesh_,
-					IOobject::NO_READ,
-					IOobject::NO_WRITE
-				 ),
-				 mudField_[i]/rhodField_[i]
-			 )
+                IOobject
+                (
+                    "nudField"+ Foam::name(i+1),
+                    mesh_.time().timeName(),
+                    mesh_,
+                    IOobject::NO_READ,
+                    IOobject::NO_WRITE
+                 ),
+                 mudField_[i]/rhodField_[i]
+             )
         );
-	}
+    }
 
 }
 

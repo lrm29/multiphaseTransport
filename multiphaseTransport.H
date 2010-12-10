@@ -85,41 +85,41 @@ namespace multiphase
 class transport
 {
 
-	// Private Data
+    // Private Data
 
-		const fvMesh& mesh_;
+        const fvMesh& mesh_;
 
-		//! Dictionary containing changeable constants.
-		const dictionary& multiphaseTransportDictionary_;
-    	const dictionary& continuousPhaseSubDict_;
-    	const dictionary& dispersedPhaseSubDict_;
-    	const dictionary& transportCoeffsSubDict_;
+        //! Dictionary containing changeable constants.
+        const dictionary& multiphaseTransportDictionary_;
+        const dictionary& continuousPhaseSubDict_;
+        const dictionary& dispersedPhaseSubDict_;
+        const dictionary& transportCoeffsSubDict_;
 
-    	const label dispersedPhases_;
-		const dimensionedScalar Cl_;
-		const dimensionedScalar Cvm_;
+        const label dispersedPhases_;
+        const dimensionedScalar Cl_;
+        const dimensionedScalar Cvm_;
 
-		dimensionedScalar rhoc_;
-		PtrList<dimensionedScalar> rhod_;
-		dimensionedScalar muc_;
-		PtrList<dimensionedScalar> mud_;
-		dimensionedScalar nuc_;
-		PtrList<dimensionedScalar> nud_;
+        dimensionedScalar rhoc_;
+        PtrList<dimensionedScalar> rhod_;
+        dimensionedScalar muc_;
+        PtrList<dimensionedScalar> mud_;
+        dimensionedScalar nuc_;
+        PtrList<dimensionedScalar> nud_;
 
-		PtrList<dimensionedScalar> sigmad_;
+        PtrList<dimensionedScalar> sigmad_;
 
-	    volScalarField rhocField_;
-	    PtrList<volScalarField> rhodField_;
-	    volScalarField mucField_;
-	    PtrList<volScalarField> mudField_;
-	    volScalarField nucField_;
-	    PtrList<volScalarField> nudField_;
+        volScalarField rhocField_;
+        PtrList<volScalarField> rhodField_;
+        volScalarField mucField_;
+        PtrList<volScalarField> mudField_;
+        volScalarField nucField_;
+        PtrList<volScalarField> nudField_;
 
 
     // Private Member Functions
 
         //! Disallow copy construct
-	    transport(const transport&);
+        transport(const transport&);
 
         //! Disallow default bitwise assignment
         void operator=(const transport&);
@@ -130,9 +130,9 @@ public:
     // Constructors
 
         //! Construct from components.
-		transport
+        transport
         (
-        	const IOdictionary& multiphaseTransportDictionary,
+            const IOdictionary& multiphaseTransportDictionary,
             const fvMesh& mesh
         );
 
@@ -146,43 +146,43 @@ public:
         //! Return the density of the continuous phase.
         const dimensionedScalar& rhoc() const {return rhoc_;}
         //! Return a field for the density of the continuous phase.
-		const volScalarField& rhocf() const {return rhocField_;}
+        const volScalarField& rhocf() const {return rhocField_;}
 
         //! Return the density of the dispersed phase.
-		const dimensionedScalar& rhod(const int& phaseNumber) const {return rhod_[phaseNumber];}
-		//! Return a field for the density of the dispersed phase.
-		const volScalarField& rhodf(const int& phaseNumber) const {return rhodField_[phaseNumber];}
+        const dimensionedScalar& rhod(const int& phaseNumber) const {return rhod_[phaseNumber];}
+        //! Return a field for the density of the dispersed phase.
+        const volScalarField& rhodf(const int& phaseNumber) const {return rhodField_[phaseNumber];}
 
         //! Return the dynamic viscosity of the continuous phase.
-		const dimensionedScalar& muc() const {return muc_;}
-		//! Return a field for the dynamic viscosity of the continuous phase.
-		const volScalarField& mucf() const {return mucField_;}
+        const dimensionedScalar& muc() const {return muc_;}
+        //! Return a field for the dynamic viscosity of the continuous phase.
+        const volScalarField& mucf() const {return mucField_;}
 
         //! Return the dynamic viscosity of the dispersed phase.
-		const dimensionedScalar& mud(const int& phaseNumber) const {return mud_[phaseNumber];}
-		//! Return a field for the dynamic viscosity of the dispersed phase.
-		const volScalarField& mudf(const int& phaseNumber) const {return mudField_[phaseNumber];}
+        const dimensionedScalar& mud(const int& phaseNumber) const {return mud_[phaseNumber];}
+        //! Return a field for the dynamic viscosity of the dispersed phase.
+        const volScalarField& mudf(const int& phaseNumber) const {return mudField_[phaseNumber];}
 
         //! Return the kinematic viscosity of the continuous phase.
-		const dimensionedScalar& nuc() const {return nuc_;}
+        const dimensionedScalar& nuc() const {return nuc_;}
         //! Return a field for the kinematic viscosity of the continuous phase.
-		const volScalarField& nucf() const {return nucField_;}
+        const volScalarField& nucf() const {return nucField_;}
 
         //! Return the kinematic viscosity of the dispersed phase.
-		const dimensionedScalar& nud(const int& phaseNumber) const {return nud_[phaseNumber];}
-		//! Return a field for the kinematic viscosity of the dispersed phase.
-		const volScalarField& nudf(const int& phaseNumber) const {return nudField_[phaseNumber];}
+        const dimensionedScalar& nud(const int& phaseNumber) const {return nud_[phaseNumber];}
+        //! Return a field for the kinematic viscosity of the dispersed phase.
+        const volScalarField& nudf(const int& phaseNumber) const {return nudField_[phaseNumber];}
 
         //! Return the interfacial tension of the ith dispersed phase with the continuous phase.
-		const dimensionedScalar& sigmad(const int& phaseNumber) const {return sigmad_[phaseNumber];}
+        const dimensionedScalar& sigmad(const int& phaseNumber) const {return sigmad_[phaseNumber];}
 
-		//! Return the lift coefficient.
-		const dimensionedScalar& Cl() const {return Cl_;}
+        //! Return the lift coefficient.
+        const dimensionedScalar& Cl() const {return Cl_;}
 
-		//! Return the virtual mass coefficient.
-		const dimensionedScalar& Cvm() const {return Cvm_;}
+        //! Return the virtual mass coefficient.
+        const dimensionedScalar& Cvm() const {return Cvm_;}
 
-		const label& Nd() const {return dispersedPhases_;}
+        const label& Nd() const {return dispersedPhases_;}
 
 };
 
